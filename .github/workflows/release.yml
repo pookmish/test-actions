@@ -10,14 +10,34 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged
     steps:
-      - name: Tag
+      - name: Get Next Release
         id: tag
         uses: K-Phoen/semver-release-action@master
         with:
+          release_strategy: none
           release_branch: main
           tag_format: "%major%.%minor%.%patch%"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v3
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          ref: 'main'
+          tag_name: ${{ steps.tag.outputs.tag }}
+          release_name: Release ${{ steps.tag.outputs.tag }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
+#      - uses: actions/checkout@v3
+#        with:
+#          ref: 'main'
+#      - name: Back to Dev
+#        if: ${{ steps.tag.outputs.tag }}
+#        run: |
+#          composer global require su-sws/stanford-caravan:dev-8.x-3.x
+#          ~/.composer/vendor/bin/sws-caravan back-to-dev $GITHUB_REF $GITHUB_WORKSPACE main
