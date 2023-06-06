@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged
     steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: 'main'
       - name: Get Next Release
         id: tag
         uses: K-Phoen/semver-release-action@master
@@ -19,6 +22,8 @@ jobs:
           tag_format: "%major%.%minor%.%patch%"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Debug
+        run: echo ${{ steps.tag.outputs.tag }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
