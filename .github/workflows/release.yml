@@ -24,11 +24,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Debug
         run: echo ${{ steps.tag.outputs.tag }}
-      - uses: ncipollo/release-action@v1
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          name: ${{ steps.tag.outputs.tag }}
           tag: ${{ steps.tag.outputs.tag }}
-          bodyFile: |
-            ${{ steps.tag.outputs.tag }}
+          commit: ${{ github.sha }}
+          generateReleaseNotes: true
+          makeLatest: true
 #      - uses: actions/checkout@v3
 #        with:
 #          ref: 'main'
