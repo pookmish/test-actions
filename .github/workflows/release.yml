@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions: write-all
     if: github.event.pull_request.merged
     steps:
       - uses: actions/checkout@v3
@@ -25,6 +26,7 @@ jobs:
       - name: Debug
         run: echo ${{ steps.tag.outputs.tag }}
       - name: Create Release
+        if: ${{ steps.tag.outputs.tag }}
         uses: ncipollo/release-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
