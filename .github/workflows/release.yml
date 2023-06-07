@@ -11,9 +11,7 @@ jobs:
     permissions: write-all
     if: github.event.pull_request.merged
     steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: 'main'
+
       - name: Get Next Release
         id: tag
         uses: K-Phoen/semver-release-action@master
@@ -36,6 +34,9 @@ jobs:
           commit: ${{ github.sha }}
           generateReleaseNotes: true
           makeLatest: true
+      - uses: actions/checkout@v3
+        with:
+          ref: '1.x'
       - name: Back to Dev
         if: ${{ steps.tag.outputs.tag }}
         run: |
