@@ -36,11 +36,8 @@ jobs:
           commit: ${{ github.sha }}
           generateReleaseNotes: true
           makeLatest: true
-#      - uses: actions/checkout@v3
-#        with:
-#          ref: 'main'
-#      - name: Back to Dev
-#        if: ${{ steps.tag.outputs.tag }}
-#        run: |
-#          composer global require su-sws/stanford-caravan:dev-8.x-3.x
-#          ~/.composer/vendor/bin/sws-caravan back-to-dev $GITHUB_REF $GITHUB_WORKSPACE main
+      - name: Back to Dev
+        if: ${{ steps.tag.outputs.tag }}
+        run: |
+          composer global require su-sws/stanford-caravan:dev-8.x-3.x
+          ~/.composer/vendor/bin/sws-caravan back-to-dev $GITHUB_REF $GITHUB_WORKSPACE main
