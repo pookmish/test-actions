@@ -13,3 +13,6 @@
 
 ## Changes 1.1.3
 - fix back to dev
+
+# Changes 1.1.4
+- fetch depth 0
