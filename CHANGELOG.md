@@ -16,3 +16,6 @@
 
 # Changes 1.1.4
 - fetch depth 0
+
+# Changes 1.2.0
+- Just release a new minor
